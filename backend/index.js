@@ -2,6 +2,8 @@ import express from "express";
 import mysql from "mysql2";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import dotenv from "dotenv";
+dotenv.config();
 
 const app = express();
 
@@ -9,7 +11,7 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: "http://localhost:5173", 
+    origin: ["http://localhost:3001", "http://localhost:5173"],
     credentials: true,
   })
 );
@@ -17,7 +19,7 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
 const db = mysql.createConnection({
-  host: "127.0.0.1",
+  host: "host.docker.internal",
   user: "root",
   password: "Pheonix13",
   database: "dbmslab",
@@ -137,5 +139,4 @@ app.get("/orders", (req, res) => {
       res.json(data);
     }
   });
-}
-);
+});
